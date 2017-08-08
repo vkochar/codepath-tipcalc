@@ -12,6 +12,8 @@
 		8B047E671F37EFDE0041491F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8B047E651F37EFDE0041491F /* Main.storyboard */; };
 		8B047E691F37EFDE0041491F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B047E681F37EFDE0041491F /* Assets.xcassets */; };
 		8B047E6C1F37EFDE0041491F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8B047E6A1F37EFDE0041491F /* LaunchScreen.storyboard */; };
+		8B047E741F39442C0041491F /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B047E731F39442C0041491F /* SettingsViewController.swift */; };
+		8B047E761F3952D90041491F /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B047E751F3952D90041491F /* UserSettings.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +24,8 @@
 		8B047E681F37EFDE0041491F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8B047E6B1F37EFDE0041491F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8B047E6D1F37EFDE0041491F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8B047E731F39442C0041491F /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		8B047E751F3952D90041491F /* UserSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +64,8 @@
 				8B047E681F37EFDE0041491F /* Assets.xcassets */,
 				8B047E6A1F37EFDE0041491F /* LaunchScreen.storyboard */,
 				8B047E6D1F37EFDE0041491F /* Info.plist */,
+				8B047E731F39442C0041491F /* SettingsViewController.swift */,
+				8B047E751F3952D90041491F /* UserSettings.swift */,
 			);
 			path = TipCalculator;
 			sourceTree = "<group>";
@@ -137,7 +143,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B047E641F37EFDE0041491F /* TipViewController.swift in Sources */,
+				8B047E761F3952D90041491F /* UserSettings.swift in Sources */,
 				8B047E621F37EFDE0041491F /* AppDelegate.swift in Sources */,
+				8B047E741F39442C0041491F /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

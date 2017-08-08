@@ -28,6 +28,11 @@ class TipViewController: UIViewController {
         personImage.tintColor = greyColor
         billAmountLabel.attributedPlaceholder = NSAttributedString(string: "$", attributes: [NSForegroundColorAttributeName:greyColor])
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        tipPercentageControl.selectedSegmentIndex = UserSettings.sharedInstance.getDefaultTip()
+        calculateTip()
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
