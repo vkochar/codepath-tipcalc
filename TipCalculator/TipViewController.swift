@@ -9,7 +9,7 @@
 import UIKit
 
 class TipViewController: UIViewController {
-
+    
     @IBOutlet weak var billAmountLabel: UITextField!
     
     @IBOutlet weak var tipPercentageControl: UISegmentedControl!
@@ -20,27 +20,78 @@ class TipViewController: UIViewController {
     @IBOutlet weak var numberOfPeopleLabel: UILabel!
     @IBOutlet weak var personImage: UIImageView!
     
+    @IBOutlet weak var totalView: UIView!
+    
     let tipArray = [0.15, 0.18, 0.2]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         let greyColor = UIColor(red: 184/255, green: 184/255, blue: 184/255, alpha: 1)
         personImage.tintColor = greyColor
-        billAmountLabel.attributedPlaceholder = NSAttributedString(string: "$", attributes: [NSForegroundColorAttributeName:greyColor])
+        billAmountLabel.attributedPlaceholder = NSAttributedString(string: currencyCode(), attributes: [NSForegroundColorAttributeName:greyColor])
+        tipLabel.text = currencyCode()
+        totalLabel.text = currencyCode()
+        
+        let userSettings = UserSettings.sharedInstance
+        
+        let timeIntervalSinceLastSave = userSettings.getTimeIntervalSinceLastSave()
+        
+        if (timeIntervalSinceLastSave <= 10){
+            let billInfo = userSettings.getBillInfo()
+            tipPercentageControl.selectedSegmentIndex = billInfo.0
+            billAmountLabel.text = billInfo.1
+            shareControl.selectedSegmentIndex = billInfo.2
+            print("less than 10 mins")
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let userSettings = UserSettings.sharedInstance
+        
+        userSettings.saveBillInfo(tipIndex: tipPercentageControl.selectedSegmentIndex,
+                                  billAmount: billAmountLabel.text!,
+                                  splitBetween: shareControl.selectedSegmentIndex)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         tipPercentageControl.selectedSegmentIndex = UserSettings.sharedInstance.getDefaultTip()
         calculateTip()
+        billAmountLabel.becomeFirstResponder()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     @IBAction func onTap(_ sender: Any) {
         view.endEditing(true)
+    }
+    
+    private func changeTotalViewVisibility(show: Bool) {
+        if (show) {
+            UIView.animate(withDuration: 0.4, animations: {
+                self.totalView.alpha = 1
+            })
+        } else {
+            UIView.animate(withDuration: 0.4, animations: {
+                self.totalView.alpha = 0
+            })
+        }
+    }
+    
+    private func currencyCode()-> String {
+        return Locale.current.currencySymbol ?? "$"
+    }
+    
+    private func formatAmount(_ money: Double)-> String? {
+        let formatter: NumberFormatter = NumberFormatter()
+        formatter.numberStyle = NumberFormatter.Style.currency
+        formatter.locale = Locale.current
+        return formatter.string(for: money)
     }
     
     private func calculateTip() {
@@ -48,8 +99,8 @@ class TipViewController: UIViewController {
         let billAmount = Double(billAmountLabel.text!) ?? 0
         
         if (billAmount == 0) {
-            tipLabel.text = "$"
-            totalLabel.text = "$"
+            tipLabel.text = currencyCode()
+            totalLabel.text = currencyCode()
             return
         }
         
@@ -59,11 +110,12 @@ class TipViewController: UIViewController {
         let tipAmount = myBillAmount * tipArray[tipPercentageControl.selectedSegmentIndex]
         let totalAmount = myBillAmount + tipAmount
         
-        tipLabel.text = String(format: "$%.2f", tipAmount)
-        totalLabel.text = String(format: "$%.2f", totalAmount)
+        tipLabel.text = formatAmount(tipAmount)
+        totalLabel.text = formatAmount(totalAmount)
     }
     
     @IBAction func didUpdateBillAmount(_ sender: Any) {
+        changeTotalViewVisibility(show: billAmountLabel.text != "")
         calculateTip()
     }
     
@@ -86,6 +138,5 @@ class TipViewController: UIViewController {
         
         calculateTip()
     }
-
 }
 
