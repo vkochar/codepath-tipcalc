@@ -41,6 +41,7 @@ class TipViewController: UIViewController {
             tipPercentageControl.selectedSegmentIndex = billInfo.0
             billAmountLabel.text = billInfo.1
             shareControl.selectedSegmentIndex = billInfo.2
+            changeTotalViewVisibility(show: true)
             print("less than 10 mins")
         }
     }
